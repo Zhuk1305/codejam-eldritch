@@ -112,11 +112,10 @@ function getPlayCard(legendCard, level, playCardArray) {
     case "normal":
       return getPlayCardForNormalLevel(playCardArray, arrNumOfColor);
     case "hard":
-      // getPlayCardForLevel(level, playCardArray, arrNumOfColor);
-      break;
+      return getPlayCardForHardLevel(playCardArray, arrNumOfColor);
     case "very-hard":
-      // getPlayCardForLevel(level, playCardArray, arrNumOfColor);
-      break;
+      return getPlayCardForVeryHardLevel(playCardArray, arrNumOfColor);
+
     default:
       return;
   }
@@ -206,6 +205,65 @@ function getPlayCardForNormalLevel(playCardArray, arrNumOfColor) {
     getCard(greenCard, numOfGreen),
     getCard(brownCard, numOfBrown),
     getCard(blueCard, numOfBlue),
+  ];
+}
+
+function getPlayCardForHardLevel(playCardArray, arrNumOfColor) {
+  const [numOfGreen, numOfBrown, numOfBlue] = arrNumOfColor;
+  const [greenCard, brownCard, blueCard] = playCardArray;
+  const hardCardGreen = getOnlyHardCard(greenCard);
+  const greenNormalCard = getOnlyNormalCard(greenCard);
+
+  const hardCardBrown = getOnlyHardCard(brownCard);
+  const brownNormalCard = getOnlyNormalCard(brownCard);
+
+  const hardCardBlue = getOnlyHardCard(blueCard);
+  const blueNormalCard = getOnlyNormalCard(blueCard);
+
+  return [
+    getCard(hardCardGreen.concat(greenNormalCard), numOfGreen),
+    getCard(hardCardBrown.concat(brownNormalCard), numOfBrown),
+    getCard(hardCardBlue.concat(blueNormalCard), numOfBlue),
+  ];
+}
+
+function getPlayCardForVeryHardLevel(playCardArray, arrNumOfColor) {
+  const [numOfGreen, numOfBrown, numOfBlue] = arrNumOfColor;
+  const [greenCard, brownCard, blueCard] = playCardArray;
+  const hardCardGreen = getOnlyHardCard(greenCard);
+  if (hardCardGreen.length < numOfGreen) {
+    const greenNormalCard = getOnlyNormalCard(greenCard);
+    const getRandowGreenNormal = getCard(
+      greenNormalCard,
+      numOfGreen - hardCardGreen.length
+    );
+    hardCardGreen.splice(0, 0, ...getRandowGreenNormal);
+  }
+
+  const hardCardBrown = getOnlyHardCard(brownCard);
+  if (hardCardBrown.length < numOfBrown) {
+    const brownNormalCard = getOnlyNormalCard(brownCard);
+    const getRandowBrownNormal = getCard(
+      brownNormalCard,
+      numOfBrown - hardCardBrown.length
+    );
+    hardCardBrown.splice(0, 0, ...getRandowBrownNormal);
+  }
+
+  const hardCardBlue = getOnlyHardCard(blueCard);
+  if (hardCardBlue.length < numOfBlue) {
+    const blueNormalCard = getOnlyNormalCard(blueCard);
+    const getRandowBlueNormal = getCard(
+      blueNormalCard,
+      numOfBlue - hardCardBlue.length
+    );
+    hardCardBlue.splice(0, 0, ...getRandowBlueNormal);
+  }
+
+  return [
+    getCard(hardCardGreen, numOfGreen),
+    getCard(hardCardBrown, numOfBrown),
+    getCard(hardCardBlue, numOfBlue),
   ];
 }
 
