@@ -104,11 +104,11 @@ function getPlayCard(legendCard, level, playCardArray) {
   const arrNumOfColor = [numOfGreenCard, numOfBrownCard, numOfBlueCard];
   switch (level) {
     case "very-easy":
-      // getPlayCardForLevel(level, playCardArray, arrNumOfColor);
-      break;
+      return getPlayCardForVeryEasyLevel(playCardArray, arrNumOfColor);
+
     case "easy":
-      // getPlayCardForLevel(level, playCardArray, arrNumOfColor);
-      break;
+      return getPlayCardForEasyLevel(playCardArray, arrNumOfColor);
+
     case "normal":
       return getPlayCardForNormalLevel(playCardArray, arrNumOfColor);
     case "hard":
@@ -120,6 +120,83 @@ function getPlayCard(legendCard, level, playCardArray) {
     default:
       return;
   }
+}
+
+function getOnlyEasyCard(card) {
+  const snowCard = [];
+  card.map((item) => item.difficulty === "easy" && snowCard.push(item));
+  return snowCard;
+}
+
+function getOnlyNormalCard(card) {
+  const snowCard = [];
+  card.map((item) => item.difficulty === "normal" && snowCard.push(item));
+  return snowCard;
+}
+
+function getOnlyHardCard(card) {
+  const snowCard = [];
+  card.map((item) => item.difficulty === "hard" && snowCard.push(item));
+  return snowCard;
+}
+
+function getPlayCardForVeryEasyLevel(playCardArray, arrNumOfColor) {
+  const [numOfGreen, numOfBrown, numOfBlue] = arrNumOfColor;
+  const [greenCard, brownCard, blueCard] = playCardArray;
+  const onlySnowCardGreen = getOnlyEasyCard(greenCard);
+  if (onlySnowCardGreen.length < numOfGreen) {
+    const greenNormalCard = getOnlyNormalCard(greenCard);
+    const getRandowGreenNormal = getCard(
+      greenNormalCard,
+      numOfGreen - onlySnowCardGreen.length
+    );
+    onlySnowCardGreen.splice(0, 0, ...getRandowGreenNormal);
+  }
+
+  const onlySnowCardBrown = getOnlyEasyCard(brownCard);
+  if (onlySnowCardBrown.length < numOfBrown) {
+    const brownNormalCard = getOnlyNormalCard(brownCard);
+    const getRandowBrownNormal = getCard(
+      brownNormalCard,
+      numOfBrown - onlySnowCardBrown.length
+    );
+    onlySnowCardBrown.splice(0, 0, ...getRandowBrownNormal);
+  }
+
+  const onlySnowCardBlue = getOnlyEasyCard(blueCard);
+  if (onlySnowCardBlue.length < numOfBlue) {
+    const blueNormalCard = getOnlyNormalCard(blueCard);
+    const getRandowBlueNormal = getCard(
+      blueNormalCard,
+      numOfBlue - onlySnowCardBlue.length
+    );
+    onlySnowCardBlue.splice(0, 0, ...getRandowBlueNormal);
+  }
+
+  return [
+    getCard(onlySnowCardGreen, numOfGreen),
+    getCard(onlySnowCardBrown, numOfBrown),
+    getCard(onlySnowCardBlue, numOfBlue),
+  ];
+}
+
+function getPlayCardForEasyLevel(playCardArray, arrNumOfColor) {
+  const [numOfGreen, numOfBrown, numOfBlue] = arrNumOfColor;
+  const [greenCard, brownCard, blueCard] = playCardArray;
+  const onlySnowCardGreen = getOnlyEasyCard(greenCard);
+  const greenNormalCard = getOnlyNormalCard(greenCard);
+
+  const onlySnowCardBrown = getOnlyEasyCard(brownCard);
+  const brownNormalCard = getOnlyNormalCard(brownCard);
+
+  const onlySnowCardBlue = getOnlyEasyCard(blueCard);
+  const blueNormalCard = getOnlyNormalCard(blueCard);
+
+  return [
+    getCard(onlySnowCardGreen.concat(greenNormalCard), numOfGreen),
+    getCard(onlySnowCardBrown.concat(brownNormalCard), numOfBrown),
+    getCard(onlySnowCardBlue.concat(blueNormalCard), numOfBlue),
+  ];
 }
 
 function getPlayCardForNormalLevel(playCardArray, arrNumOfColor) {
@@ -216,6 +293,7 @@ mixedBtn.addEventListener("click", () => {
     state.level.id,
     playCardArray
   );
+
   state.firstStage = getStageCardArray(
     currentPlayCard,
     state.legendCard.firstStage
@@ -236,7 +314,7 @@ suitCard.addEventListener("click", () => {
     state.firstStage.brown.length +
     state.firstStage.blue.length
   ) {
-    showCard(state.firstStage, "first");
+    showCard(state.firstStage);
     setTrackerStageValue(trackerFirstStage, {
       green: state.firstStage.green.length,
       brown: state.firstStage.brown.length,
@@ -247,7 +325,7 @@ suitCard.addEventListener("click", () => {
     state.secondStage.brown.length +
     state.secondStage.blue.length
   ) {
-    showCard(state.secondStage, "first");
+    showCard(state.secondStage);
     setTrackerStageValue(trackerSecondStage, {
       green: state.secondStage.green.length,
       brown: state.secondStage.brown.length,
@@ -255,16 +333,23 @@ suitCard.addEventListener("click", () => {
     });
   } else if (
     state.thirdStage.green.length +
-    state.thirdStage.brown.length +
-    state.thirdStage.blue.length
+      state.thirdStage.brown.length +
+      state.thirdStage.blue.length >
+    1
   ) {
-    showCard(state.thirdStage, "first");
+    showCard(state.thirdStage);
     setTrackerStageValue(trackerThirdStage, {
       green: state.thirdStage.green.length,
       brown: state.thirdStage.brown.length,
       blue: state.thirdStage.blue.length,
     });
   } else {
+    showCard(state.thirdStage);
+    setTrackerStageValue(trackerThirdStage, {
+      green: state.thirdStage.green.length,
+      brown: state.thirdStage.brown.length,
+      blue: state.thirdStage.blue.length,
+    });
     setDisplayNone(suitCard);
     return null;
   }
