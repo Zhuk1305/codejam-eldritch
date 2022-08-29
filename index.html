@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Eldritch</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="legend-card_block">
+        <img
+          src="./assets/Ancients/Azathoth.png"
+          alt="img"
+          class="legend-card_img"
+          id="azathoth"
+        />
+        <img
+          src="./assets/Ancients/Cthulthu.png"
+          alt="img"
+          class="legend-card_img"
+          id="cthulhu"
+        />
+        <img
+          src="./assets/Ancients/IogSothoth.png"
+          alt="img"
+          class="legend-card_img"
+          id="iogSothoth"
+        />
+        <img
+          src="./assets/Ancients/ShubNiggurath.png"
+          alt="img"
+          class="legend-card_img"
+          id="shubNiggurath"
+        />
+      </div>
+      <div class="level-block">
+        <ul class="level-list"></ul>
+      </div>
+      <div class="game-card_block">
+        <button class="mixed-btn">Замешать</button>
+        <div class="ready-card">
+          <div class="tracker-container">
+            <ul class="tracker-list">
+              <li>
+                <h2>Певрая стадия</h2>
+                <div class="stage first-stage">
+                  <div class="circle green-card"></div>
+                  <div class="circle brown-card"></div>
+                  <div class="circle blue-card"></div>
+                </div>
+              </li>
+              <li>
+                <h2>Вторая стадия</h2>
+                <div class="stage second-stage">
+                  <div class="circle green-card"></div>
+                  <div class="circle brown-card"></div>
+                  <div class="circle blue-card"></div>
+                </div>
+              </li>
+              <li>
+                <h2>Третья стадия</h2>
+                <div class="stage third-stage">
+                  <div class="circle green-card"></div>
+                  <div class="circle brown-card"></div>
+                  <div class="circle blue-card"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="play-card_container">
+            <img
+              src="./assets/mythicCardBackground.png"
+              alt="suit"
+              class="suit-card play-card_img"
+            />
+            <img
+              src="./assets/mythicCardBackground.png"
+              alt="suit"
+              class="current-card play-card_img"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
